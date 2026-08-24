@@ -1,8 +1,11 @@
 package com.example.quickstart;
 
+import com.alibaba.cloud.ai.dashscope.agent.DashScopeAgent;
+import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatModel;
 import org.junit.jupiter.api.Test;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
+import org.springframework.ai.deepseek.DeepSeekAssistantMessage;
 import org.springframework.ai.deepseek.DeepSeekChatModel;
 import org.springframework.ai.deepseek.DeepSeekChatOptions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +13,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import reactor.core.publisher.Flux;
 
 import java.util.ArrayList;
-import java.util.stream.Stream;
 
 
 @SpringBootTest
 class QuickStartApplicationTests {
 
+    // 非流式调用
     @Test
     void sayHelloToDeepSeek(@Autowired DeepSeekChatModel model) {
         // 调用模型
@@ -23,6 +26,7 @@ class QuickStartApplicationTests {
         System.out.println(hello);
     }
 
+    // 流式调用
     @Test
     void sayHelloToDeepSeekStream(@Autowired DeepSeekChatModel model) {
         // 调用模型
@@ -32,6 +36,11 @@ class QuickStartApplicationTests {
 
 
     // 设置模型参数
+    // temperature越高，生成内容越不确定
+    // maxtokens 生成内容的长度
+    // stop 生成内容的结束符
+    // DeepSeekAssistantMessage 是 DeepSeek 的输出
+
     @Test
     void setTempteraturetoDeepSeek(@Autowired DeepSeekChatModel model) {
         ArrayList<String> objects = new ArrayList<>();
@@ -46,9 +55,43 @@ class QuickStartApplicationTests {
                 .build();
         Prompt prompt = new Prompt("写一句诗歌描述中国",build);
         ChatResponse response = model.call(prompt);
-        System.out.println(response.getResult().getOutput().getText());
+        DeepSeekAssistantMessage output = (DeepSeekAssistantMessage) response.getResult().getOutput();
+
+        System.out.println(output.getReasoningContent());
+        System.out.println("------------------");
+        System.out.println(output.getText());
+    }
+
+    @Test
+    void getStreamThinkingLinkDeepSeek(@Autowired DeepSeekChatModel model) {
+        ArrayList<String> objects = new ArrayList<>();
+        objects.add("\n");
+        // 调用模型
+        DeepSeekChatOptions build = DeepSeekChatOptions
+                .builder()
+                .model("deepseek-v4-flash")
+                .temperature(0.5)
+                .build();
+        Prompt prompt = new Prompt("写一句诗歌描述中国",build);
+        Flux<ChatResponse> response = model.stream(prompt);
+        response.toIterable().forEach(res->{
+            DeepSeekAssistantMessage output = (DeepSeekAssistantMessage) res.getResult().getOutput();
+
+            System.out.println(output.getReasoningContent());
+        });
+        System.out.println("------------------");
+        response.toIterable().forEach(res->{
+            DeepSeekAssistantMessage output = (DeepSeekAssistantMessage) res.getResult().getOutput();
 
 
+            System.out.println(output.getText());
+        });
 
+    }
+
+    @Test
+    void getStreamThinkingLinkDeepSek(@Autowired DashScopeChatModel model) {
+        String aaa = model.call("写一句诗歌描述中国");
+        System.out.println(aaa);
     }
 }
