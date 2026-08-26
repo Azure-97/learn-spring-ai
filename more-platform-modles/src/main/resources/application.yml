@@ -1,0 +1,7 @@
+spring:
+  ai:
+    dashscope:
+      api-key: ${DASHSCOP_API_KEY}
+      chat:
+        options:
+          model: qwen-plus  # 可选，默认 qwen-turbo
