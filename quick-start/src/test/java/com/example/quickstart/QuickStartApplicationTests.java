@@ -2,12 +2,17 @@ package com.example.quickstart;
 
 import com.alibaba.cloud.ai.dashscope.agent.DashScopeAgent;
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatModel;
+import com.alibaba.cloud.ai.dashscope.image.DashScopeImageModel;
+import com.alibaba.cloud.ai.dashscope.image.DashScopeImageOptions;
+import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.Test;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.deepseek.DeepSeekAssistantMessage;
 import org.springframework.ai.deepseek.DeepSeekChatModel;
 import org.springframework.ai.deepseek.DeepSeekChatOptions;
+import org.springframework.ai.image.ImagePrompt;
+import org.springframework.ai.image.ImageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import reactor.core.publisher.Flux;
@@ -89,9 +94,37 @@ class QuickStartApplicationTests {
 
     }
 
+    // 调用AlibabaDashScope
     @Test
-    void getStreamThinkingLinkDeepSek(@Autowired DashScopeChatModel model) {
+    void testqwen(@Autowired DashScopeChatModel model) {
         String aaa = model.call("写一句诗歌描述中国");
         System.out.println(aaa);
+    }
+
+    // 调用AlibabaDashScope
+    @Test
+    void text2image(  @Autowired DashScopeImageModel model) {
+
+        DashScopeImageOptions options = DashScopeImageOptions.builder().model("wanx-v1").build();
+
+
+        ImagePrompt prompt = new ImagePrompt("小狗",options);
+
+        ImageResponse response = model.call(prompt);
+        System.out.println(response.getResult().getOutput().getUrl());
+        //  base64 编码的图片
+        //response.getResult().getOutput().getB64Json();
+        // 文件流
+
+
+
+    }
+
+    @Test
+    void text2v(  @Autowired DashScopeImageModel model) {
+
+
+
+
     }
 }
