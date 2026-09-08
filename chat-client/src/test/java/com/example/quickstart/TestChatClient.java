@@ -3,8 +3,16 @@ package com.example.quickstart;
 import com.alibaba.cloud.ai.dashscope.chat.DashScopeChatModel;
 import org.junit.jupiter.api.Test;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.SafeGuardAdvisor;
+import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
+import org.springframework.ai.chat.client.advisor.api.Advisor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.core.io.Resource;
+
+import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * @description:
@@ -29,4 +37,7 @@ public class TestChatClient {
         String hello = build.prompt().user("你好").call().content();
         System.out.println(hello);
     }
+
+
+
 }

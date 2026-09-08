@@ -1,7 +1,7 @@
 spring:
   ai:
     dashscope:
-      api-key: sk-ws-H.EYYYELH.pgxf.MEQCIAV3NYleBmT-WX-QlHKZzb6uwecLHaeuMrcvbGyliCeaAiA42ojCwxwaTJdeKZo9jr3NChUsyDBCPBuBuQ4-kr5UiQ # 从环境变量读取，避免硬编码
+      api-key: ${DASHSCOP_API_KEY}
       chat:
         options:
           model: qwen-plus  # 可选，默认 qwen-turbo

@@ -1,4 +1,5 @@
 spring:
+
   data:
     redis:
       host: 127.0.0.1
@@ -14,15 +15,14 @@ spring:
     password: root
 
   ai:
+    tools:
+      throw-exception-on-error: true
     dashscope:
       api-key: ${DASHSCOP_API_KEY}
       chat:
         options:
           model: qwen-plus  # 可选，默认 qwen-turbo
-    chat:
-      memory:
-        repository:
-          re
+
 
 
 
@@ -34,3 +34,9 @@ spring:
         timeout: 5000           # 连接超时（毫秒）
 
 
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
