@@ -22,16 +22,26 @@ spring:
     chat:
       memory:
         repository:
-          re
-
-
-
     memory:
       redis:
         host: localhost
         port: 6379
         password:               # 有密码则填写，无密码留空
         timeout: 5000           # 连接超时（毫秒）
+    vectorstore:
+      milvus:
+        client:
+          host: localhost
+          port: 19530
+          username: root
+          password: milvus
+        databaseName: default
+        collectionName: vector_store
+        embeddingDimension: 1536
+        indexType: IVF_FLAT
+        metricType: COSINE
+        initializeSchema: true      # 关键：默认 false，不打开不会自动建集合
+
 
 file:
   upload-dir: ./uploads        # 本地文件上传目录

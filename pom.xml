@@ -30,6 +30,8 @@
         <module>quick-start</module>
         <module>chat-client</module>
         <module>more-platform-modles</module>
+        <module>more-model-structured-agent</module>
+        <module>tool</module>
         <module>rag</module>
     </modules>
     <properties>
