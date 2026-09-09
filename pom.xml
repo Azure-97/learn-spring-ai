@@ -30,6 +30,7 @@
         <module>quick-start</module>
         <module>chat-client</module>
         <module>more-platform-modles</module>
+        <module>rag</module>
     </modules>
     <properties>
         <java.version>17</java.version>
